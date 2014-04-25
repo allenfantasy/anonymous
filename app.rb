@@ -29,40 +29,23 @@ get '/wechat' do
 end
 
 post '/wechat' do
-  logger.info "------POST------"
-  logger.info params
-  logger.info "------BODY------"
+  #logger.info "------POST------"
+  #logger.info params
+  #logger.info "------BODY------"
   #logger.info "REQUEST CLASS: #{request.class}" # Sinatra::Request < Rack::Request
   #logger.info "BODY: #{request.body}" # StringIO < Data < Object
   #logger.info "BODY.READ: #{request.body.read}" # String
   req_msg = MultiXml.parse(request.body.read)['xml']
-  logger.info "REQ: #{req_msg}"
+  #logger.info "REQ: #{req_msg}"
   authorize!
 
-  logger.info "PASSED"
-
-  # RESPONSE
+  # processing messages
 
   uid = req_msg["FromUserName"]
   req_origin_msg = req_msg["Content"]
-
-  # if uid in sessions
-  #   if msg == 'kill session'
-  #     kill session
-  #   else
-  #     repost msg to his chatter
-  #   end
-  # else
-  #   if msg == 'start'
-  #     if queue empty
-  #       put uid into queue
-  #     else
-  #       setup a session, remove the waiting person from queue
-  #     end
-  #   else
-  #     return tips
-  #   end
-  # end
+  logger.info "------INIT------"
+  logger.info "Queue: #{queue}"
+  logger.info "Sessions: #{sessions}"
 
   idx = sessions.map{|s| s[0]}.index(uid) || sessions.map{|s| s[1]}.index(uid)
 
@@ -94,8 +77,12 @@ post '/wechat' do
         }
       }.to_json)
 
-      logger.info "pushing msg..."
-      logger.info res
+      logger.info "------REPOST------"
+      logger.info "Queue: #{queue}"
+      logger.info "Sessions: #{sessions}"
+
+      #logger.info "pushing msg..."
+      #logger.info res
     end
   else
     if req_origin_msg == "start"
@@ -120,7 +107,6 @@ post '/wechat' do
         }.to_json)
 
         logger.info "pushing msg..."
-        logger.info "uid: #{uid1}"
         logger.info res
 
         # setup a session
