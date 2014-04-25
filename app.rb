@@ -120,6 +120,7 @@ post '/wechat' do
         }.to_json)
 
         logger.info "pushing msg..."
+        logger.info "uid: #{uid1}"
         logger.info res
 
         # setup a session
