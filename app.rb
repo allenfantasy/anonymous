@@ -39,5 +39,6 @@ post '/wechat' do
   # RESPONSE
 
   query = req_message["Content"]
+  "Fuck you"
 
 end
