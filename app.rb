@@ -39,6 +39,12 @@ post '/wechat' do
   # RESPONSE
 
   query = req_message["Content"]
-  "Fuck you"
+  res_message = {
+    "ToUserName" => req_message["FromUserName"],
+    "FromUserName" => req_message["ToUserName"],
+    "CreateTime" => Time.now.to_i, # unix timestamp
+    "MsgType" => 'text',
+    "Content" => "fuck"
+  }.to_xml(:root => 'xml')
 
 end
