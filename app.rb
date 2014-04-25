@@ -80,7 +80,7 @@ post '/wechat' do
         :text => {
           :content => m
         }
-      })
+      }.to_json)
     else
       # repost
       HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}", :body => {
@@ -89,7 +89,7 @@ post '/wechat' do
         :text => {
           :content => req_origin_msg
         }
-      })
+      }.to_json)
     end
   else
     if req_origin_msg == "start"
@@ -111,7 +111,7 @@ post '/wechat' do
           :text => {
             :content => m
           }
-        })
+        }.to_json)
 
         # setup a session
         sessions.push([uid, uid1])
