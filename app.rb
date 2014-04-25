@@ -74,22 +74,28 @@ post '/wechat' do
       m = "[SYS]对话已结束"
 
       # push ending message to uid1
-      HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}", :body => {
+      res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}", :body => {
         :touser => uid1,
         :msgtype => "text",
         :text => {
           :content => m
         }
       }.to_json)
+
+      logger.info "pushing msg..."
+      logger.info res
     else
       # repost
-      HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}", :body => {
+      res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}", :body => {
         :touser => uid1,
         :msgtype => "text",
         :text => {
           :content => req_origin_msg
         }
       }.to_json)
+
+      logger.info "pushing msg..."
+      logger.info res
     end
   else
     if req_origin_msg == "start"
@@ -105,13 +111,16 @@ post '/wechat' do
         uid1 = queue.unshift
 
         # push msg to uid1
-        HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}", :body => {
+        res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}", :body => {
           :touser => uid1,
           :msgtype => "text",
           :text => {
             :content => m
           }
         }.to_json)
+
+        logger.info "pushing msg..."
+        logger.info res
 
         # setup a session
         sessions.push([uid, uid1])
