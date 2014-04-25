@@ -50,11 +50,11 @@ post '/wechat' do
   idx = sessions.map{|s| s[0]}.index(uid) || sessions.map{|s| s[1]}.index(uid)
 
   if !idx.nil? # in sessions
-    session = sessions.delete_at(idx)
-    uid1 = session[0] == uid ? session[1] : session[0]
     if req_origin_msg == "bye"
       # kill session
       m = "[SYS]对话已结束"
+      session = sessions.delete_at(idx)
+      uid1 = session[0] == uid ? session[1] : session[0]
 
       # push ending message to uid1
       res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}", :body => {
@@ -69,6 +69,8 @@ post '/wechat' do
       logger.info res
     else
       # repost
+      session = sessions[idx]
+      uid1 = session[0] == uid ? session[1] : session[0]
       res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}", :body => {
         :touser => uid1,
         :msgtype => "text",
