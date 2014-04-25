@@ -108,7 +108,7 @@ post '/wechat' do
         queue.push(uid)
       else
         m = "[SYS]已建立对话"
-        uid1 = queue.unshift
+        uid1 = queue.shift
 
         # push msg to uid1
         res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}", :body => {
