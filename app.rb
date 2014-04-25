@@ -123,7 +123,7 @@ post '/wechat' do
 
   # setup return msg to request client
   res_msg = {
-    "ToUserName" => req_message["FromUserName"], "FromUserName" => req_message["ToUserName"],
+    "ToUserName" => req_msg["FromUserName"], "FromUserName" => req_msg["ToUserName"],
     "CreateTime" => Time.now.to_i, # unix timestamp
     "MsgType" => 'text',
     "Content" => m
