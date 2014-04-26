@@ -1,4 +1,4 @@
-dictionary
+Anonymous
 ==========
 
-Dictionary: Wechat MP + YouDao Dict API
+Chat anonymously, if you want.
