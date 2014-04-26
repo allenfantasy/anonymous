@@ -1,3 +1,4 @@
+require './app'
 require 'httparty'
 
 appid = "wxcabc0cd7000f0d70"

@@ -16,8 +16,10 @@ queue = []
 sessions = []
 access_token = "lujBn2yur3wSnzpCkJSFQWHw6i-KnKWGpBlznPFbMinwxzUKt0ftSu5fWRngbNhu"
 
-every 71.hours do
-  rake "update_token"
+every 1.minute do
+  res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=#{appid}&secret=#{secret}")
+  logger.info "grep token"
+  logger.info res
 end
 
 get '/' do
