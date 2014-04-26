@@ -16,6 +16,12 @@ queue = []
 sessions = []
 access_token = "N1p25_BBWE4hVad1AcrPK48IMhU_oEZvSbjcDw3qI8HVQ3jRVdnx8fyg1GZhD8wR"
 
+every 1.minute do
+  res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=#{appid}&secret=#{secret}")
+  logger.info "grep token"
+  logger.info res
+end
+
 get '/' do
   logger.info "------GET HOME------"
   logger.info params
