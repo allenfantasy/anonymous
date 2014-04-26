@@ -11,7 +11,13 @@ require 'whenever'
 
 configure do
   enable :logging
-  set :access_token,"N1p25_BBWE4hVad1AcrPK48IMhU_oEZvSbjcDw3qI8HVQ3jRVdnx8fyg1GZhD8wR"
+  # update the latest one
+  token_res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=#{appid}&secret=#{secret}")
+
+  logger.info token_res
+
+  set :access_token,"_rUNSg3KSAN9vhAdQdifME5uDfzLKcjvwp9CYuVY-C0W7Df9IQ87YWDvXP5NbMUn"
+  set :token_timestamp, Time.now
 end
 
 queue = []
