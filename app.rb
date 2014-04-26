@@ -62,7 +62,7 @@ post '/wechat' do
   logger.info "------INIT------"
   logger.info "Queue: #{queue}"
   logger.info "Sessions: #{sessions}"
-  logger.info "Access token: #{access_token}"
+  #logger.info "Access token: #{access_token}"
   logger.info "Token Response: #{settings.access_token?}"
 
   idx = sessions.map{|s| s[0]}.index(uid) || sessions.map{|s| s[1]}.index(uid)
