@@ -14,7 +14,7 @@ end
 
 queue = []
 sessions = []
-access_token = "lujBn2yur3wSnzpCkJSFQWHw6i-KnKWGpBlznPFbMinwxzUKt0ftSu5fWRngbNhu"
+access_token = "N1p25_BBWE4hVad1AcrPK48IMhU_oEZvSbjcDw3qI8HVQ3jRVdnx8fyg1GZhD8wR"
 
 get '/' do
   logger.info "------GET HOME------"
