@@ -11,9 +11,8 @@ require 'whenever'
 
 configure do
   enable :logging
+  set :access_token,"N1p25_BBWE4hVad1AcrPK48IMhU_oEZvSbjcDw3qI8HVQ3jRVdnx8fyg1GZhD8wR"
 end
-
-set :access_token,"N1p25_BBWE4hVad1AcrPK48IMhU_oEZvSbjcDw3qI8HVQ3jRVdnx8fyg1GZhD8wR"
 
 queue = []
 sessions = []
@@ -64,7 +63,7 @@ post '/wechat' do
   logger.info "Queue: #{queue}"
   logger.info "Sessions: #{sessions}"
   logger.info "Access token: #{access_token}"
-  logger.info "Token Response: #{settings.access_token}"
+  logger.info "Token Response: #{settings.access_token?}"
 
   idx = sessions.map{|s| s[0]}.index(uid) || sessions.map{|s| s[1]}.index(uid)
 
