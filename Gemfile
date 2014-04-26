@@ -7,5 +7,3 @@ gem 'multi_xml'
 gem 'activesupport'
 gem 'builder' # for xml
 gem 'httparty'
-gem 'whenever', :require => false
-gem 'rake'

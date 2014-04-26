@@ -18,29 +18,12 @@ configure do
   # update the latest one
   token_res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=#{settings.appid}&secret=#{settings.appsecret}")
 
-  logger.info token_res
-
-  set :access_token,"_rUNSg3KSAN9vhAdQdifME5uDfzLKcjvwp9CYuVY-C0W7Df9IQ87YWDvXP5NbMUn"
+  set :access_token, token_res.parsed_response["access_token"]
   set :token_timestamp, Time.now
 end
 
 queue = []
 sessions = []
-#access_token = "N1p25_BBWE4hVad1AcrPK48IMhU_oEZvSbjcDw3qI8HVQ3jRVdnx8fyg1GZhD8wR"
-
-#Thread.new do
-  #loop do
-    #sleep 30
-    #token_res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=#{appid}&secret=#{secret}")
-    #logger.info "grep token"
-    #logger.info res
-  #end
-#end
-#every 30.second do
-  #res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=#{appid}&secret=#{secret}")
-  #logger.info "grep token"
-  #logger.info res
-#end
 
 get '/' do
   logger.info "------GET HOME------"
@@ -85,6 +68,14 @@ post '/wechat' do
       uid1 = session[0] == uid ? session[1] : session[0]
 
       # push ending message to uid1
+      # update expired token if needed
+      if Time.now - settings.token_timestamp > 7200 # expired
+        token_res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=#{settings.appid}&secret=#{settings.appsecret}")
+
+        set :access_token, token_res.parsed_response["access_token"]
+        set :token_timestamp, Time.now
+      end
+
       res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{settings.access_token}", :body => {
         :touser => uid1,
         :msgtype => "text",
