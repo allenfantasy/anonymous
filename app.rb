@@ -16,6 +16,10 @@ queue = []
 sessions = []
 access_token = "lujBn2yur3wSnzpCkJSFQWHw6i-KnKWGpBlznPFbMinwxzUKt0ftSu5fWRngbNhu"
 
+every 71.hours do
+  rake "update_token"
+end
+
 get '/' do
   logger.info "------GET HOME------"
   logger.info params
