@@ -20,7 +20,7 @@ access_token = "N1p25_BBWE4hVad1AcrPK48IMhU_oEZvSbjcDw3qI8HVQ3jRVdnx8fyg1GZhD8wR
 Thread.new do
   loop do
     sleep 30
-    res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=#{appid}&secret=#{secret}")
+    token_res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=#{appid}&secret=#{secret}")
     logger.info "grep token"
     logger.info res
   end
@@ -61,6 +61,8 @@ post '/wechat' do
   logger.info "------INIT------"
   logger.info "Queue: #{queue}"
   logger.info "Sessions: #{sessions}"
+  logger.info "Access token: #{access_token}"
+  logger.info "Token Response: #{token_res}"
 
   idx = sessions.map{|s| s[0]}.index(uid) || sessions.map{|s| s[1]}.index(uid)
 
