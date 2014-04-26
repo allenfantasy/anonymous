@@ -11,8 +11,9 @@ require 'whenever'
 
 configure do
   enable :logging
-  set :access_token,"N1p25_BBWE4hVad1AcrPK48IMhU_oEZvSbjcDw3qI8HVQ3jRVdnx8fyg1GZhD8wR"
 end
+
+set :access_token,"N1p25_BBWE4hVad1AcrPK48IMhU_oEZvSbjcDw3qI8HVQ3jRVdnx8fyg1GZhD8wR"
 
 queue = []
 sessions = []
