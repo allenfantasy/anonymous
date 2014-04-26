@@ -63,7 +63,7 @@ post '/wechat' do
   logger.info "Queue: #{queue}"
   logger.info "Sessions: #{sessions}"
   #logger.info "Access token: #{access_token}"
-  logger.info "Token Response: #{settings.access_token?}"
+  logger.info "Token Response: #{settings.access_token}"
 
   idx = sessions.map{|s| s[0]}.index(uid) || sessions.map{|s| s[1]}.index(uid)
 
@@ -75,7 +75,7 @@ post '/wechat' do
       uid1 = session[0] == uid ? session[1] : session[0]
 
       # push ending message to uid1
-      res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}", :body => {
+      res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{settings.access_token}", :body => {
         :touser => uid1,
         :msgtype => "text",
         :text => {
@@ -89,7 +89,7 @@ post '/wechat' do
       # repost
       session = sessions[idx]
       uid1 = session[0] == uid ? session[1] : session[0]
-      res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}", :body => {
+      res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{settings.access_token}", :body => {
         :touser => uid1,
         :msgtype => "text",
         :text => {
@@ -118,7 +118,7 @@ post '/wechat' do
         uid1 = queue.shift
 
         # push msg to uid1
-        res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}", :body => {
+        res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{settings.access_token}", :body => {
           :touser => uid1,
           :msgtype => "text",
           :text => {
