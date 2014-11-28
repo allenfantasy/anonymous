@@ -7,17 +7,29 @@ require 'sinatra/reloader' if development?
 require 'active_support/all'
 require 'multi_xml'
 require 'builder'
+require 'pry'
+require './settings'
 
 configure do
   enable :logging
 
-  set :appid, "wxcabc0cd7000f0d70"
-  set :appsecret, "757b330edc8ead6e7f6d552c32a9cd1a"
+  # load settings
+  Sinatra::Application.class_eval do
+    env = self.settings.environment
+    Settings[env].keys.each do |key|
+      puts key
+      define_singleton key.to_sym do
+        Settings[env][key]
+      end
+    end
+  end
 
-  # update the latest one
-  token_res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=#{settings.appid}&secret=#{settings.appsecret}")
+  # In production update the latest token
+  if production?
+    token_res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=#{settings.appid}&secret=#{settings.appsecret}")
+    set :access_token, token_res.parsed_response["access_token"]
+  end
 
-  set :access_token, token_res.parsed_response["access_token"]
   set :token_timestamp, Time.now
 end
 
@@ -33,18 +45,12 @@ end
 get '/wechat' do
   logger.info "------VERIFY------"
   logger.info params
+  authorize!
   params["echostr"]
 end
 
 post '/wechat' do
-  #logger.info "------POST------"
-  #logger.info params
-  #logger.info "------BODY------"
-  #logger.info "REQUEST CLASS: #{request.class}" # Sinatra::Request < Rack::Request
-  #logger.info "BODY: #{request.body}" # StringIO < Data < Object
-  #logger.info "BODY.READ: #{request.body.read}" # String
   req_msg = MultiXml.parse(request.body.read)['xml']
-  #logger.info "REQ: #{req_msg}"
   authorize!
 
   # processing messages
@@ -89,6 +95,7 @@ post '/wechat' do
       # repost
       session = sessions[idx]
       uid1 = session[0] == uid ? session[1] : session[0]
+      puts settings.access_token
       res = HTTParty.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{settings.access_token}", :body => {
         :touser => uid1,
         :msgtype => "text",

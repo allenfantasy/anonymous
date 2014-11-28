@@ -10,19 +10,26 @@ GEM
     atomic (1.1.14)
     backports (3.5.0)
     builder (3.1.4)
+    coderay (1.1.0)
     httparty (0.12.0)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.6.9)
     json (1.8.1)
+    method_source (0.8.2)
     minitest (4.7.5)
     multi_json (1.8.4)
     multi_xml (0.5.3)
+    pry (0.10.0)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     rack (1.5.2)
     rack-protection (1.5.2)
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    settingslogic (2.0.9)
     sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -34,6 +41,7 @@ GEM
       rack-test
       sinatra (~> 1.4.0)
       tilt (~> 1.3)
+    slop (3.5.0)
     thread_safe (0.1.3)
       atomic
     tilt (1.4.1)
@@ -47,5 +55,7 @@ DEPENDENCIES
   builder
   httparty
   multi_xml
+  pry
+  settingslogic
   sinatra
   sinatra-contrib

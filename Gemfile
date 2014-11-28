@@ -6,4 +6,9 @@ gem 'sinatra-contrib'
 gem 'multi_xml'
 gem 'activesupport'
 gem 'builder' # for xml
-gem 'httparty'
+gem 'httparty' # http request
+gem 'settingslogic'
+
+group :development, :test do
+  gem 'pry'
+end

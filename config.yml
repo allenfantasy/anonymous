@@ -1,0 +1,14 @@
+defaults: &defaults
+  appid: "wxdkp0nlq6khftbzlt"
+  appsecret: "8yxibj6gjvmkezbgahcdfxki2ltl7raq"
+  access_token: "CJkHN0SDxrog4WFhcyPvVR1nKGXUC7ektBOL8S5clm6xvpfDujJ0Thqn"
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  appid: "wxcabc0cd7000f0d70"
+  appsecret: "757b330edc8ead6e7f6d552c32a9cd1a"
