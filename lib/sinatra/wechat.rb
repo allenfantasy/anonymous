@@ -28,6 +28,16 @@ module Sinatra
           Content: @content
         }.to_xml(:root => "xml", :skip_types => true)
       end
+
+      def to_json
+        {
+          :touser => @user_account,
+          :msgtype => @type,
+          :text => {
+            :content => @content
+          }
+        }.to_json
+      end
     end
 
     # use in main context
@@ -62,11 +72,21 @@ module Sinatra
         end
       end
 
-      def push
+      def push(me, name, content, access_token)
+        msg = Wechat::Message.new(content, {
+          "FromUserName" => me,
+          "ToUserName" => name
+        })
+        res = HTTParty.post(push_message_api(access_token), :body => msg.to_json)
       end
 
       class << Wechat
         attr_accessor :base_url
+      end
+
+      private
+      def push_message_api(access_token)
+        "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=#{access_token}"
       end
     end
     

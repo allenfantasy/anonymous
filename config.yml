@@ -1,7 +1,7 @@
 defaults: &defaults
-  appid: "wxtqoiga49bbsmvyt7"
-  appsecret: "jbywehxjxcdstqoosn1nhmieprqkffwl"
-  access_token: "AwQdsht6ayVx4iHRBIpq0UlPWDEK7nyquf31xZHKUS0B4FYOR8IDGMLo"
+  appid: "wxjcqczh1xu86vmhoy"
+  appsecret: "wxjcqczh1xu86vmhoy"
+  access_token: "Btn0OmWUgl57qwksxazyXNjRrMLbBEUvJQ7bYWtngfDxeGNwLXzy4Z1j"
 
 development:
   <<: *defaults
